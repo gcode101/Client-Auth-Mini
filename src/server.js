@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const User = require('./user');
 const bcrypt = require('bcrypt');
+const cors = require('cors');
 
 const STATUS_USER_ERROR = 422;
 const BCRYPT_COST = 11;
@@ -15,6 +16,13 @@ server.use(session({
   saveUninitialized: true,
   resave: true
 }));
+
+const corsOptions = {
+   origin: "http://localhost:3000",
+   credentials: true
+};
+
+server.use(cors(corsOptions));
 
 const loggedIn = (req, res, next) => {
   const { userId } = req.session;
